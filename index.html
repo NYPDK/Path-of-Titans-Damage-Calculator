@@ -24,33 +24,48 @@
         </div>
 
         <div class="calculator-grid">
-            <div class="input-group">
-                <label for="attackerWeight">Attacker Combat Weight</label>
-                <input type="number" id="attackerWeight" placeholder="Enter weight" min="1">
-            </div>
+            <div class="input-section attacker-section">
+                <h3 class="input-section-title">Attacker Stats</h3>
+                <div class="input-group">
+                    <label for="attackerWeight">Attacker Combat Weight</label>
+                    <input type="number" id="attackerWeight" placeholder="Enter weight" min="1">
+                </div>
 
-            <div class="input-group">
-                <label for="victimWeight">Victim Combat Weight</label>
-                <input type="number" id="victimWeight" placeholder="Enter weight" min="1">
-            </div>
+                <div class="input-group">
+                    <label for="baseDamage">Base Attack Damage</label>
+                    <input type="number" id="baseDamage" placeholder="Enter damage" min="1">
+                </div>
 
-            <div class="input-group">
-                <label for="baseDamage">Base Attack Damage</label>
-                <input type="number" id="baseDamage" placeholder="Enter damage" min="1">
+                <div class="input-group">
+                    <label for="bleedValue">Ability Bleed Value <span style='font-weight:400'>(if applicable)</span></label>
+                    <input type="number" id="bleedValue" placeholder="e.g. 0.5 for Claw Swipe" min="0" step="0.01">
+                </div>
             </div>
+            <div class="input-section victim-section">
+                <h3 class="input-section-title">Victim Stats</h3>
+                <div class="input-group">
+                    <label for="victimWeight">Victim Combat Weight</label>
+                    <input type="number" id="victimWeight" placeholder="Enter weight" min="1">
+                </div>
 
-            <div class="input-group">
-                <label for="armor">Victim Armor Value</label>
-                <input type="number" id="armor" placeholder="Default: 1" value="1" min="0.1" step="0.1">
-            </div>
+                <div class="input-group">
+                    <label for="armor">Victim Armor Value</label>
+                    <input type="number" id="armor" placeholder="Default: 1" value="1" min="0.1" step="0.1">
+                </div>
 
-            <div class="input-group">
-                <label for="victimState">Victim State</label>
-                <select id="victimState">
-                    <option value="normal">Standing / Normal</option>
-                    <option value="sitting">Sitting (2x damage)</option>
-                    <option value="sleeping">Sleeping (4x damage)</option>
-                </select>
+                <div class="input-group">
+                    <label for="victimHealth">Victim Health</label>
+                    <input type="number" id="victimHealth" placeholder="Enter health" min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="victimState">Victim State</label>
+                    <select id="victimState">
+                        <option value="normal">Standing / Normal</option>
+                        <option value="sitting">Sitting (2x damage)</option>
+                        <option value="sleeping">Sleeping (4x damage)</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -72,11 +87,37 @@
             <div class="result-item">
                 <span class="result-label">Base Damage Output</span>
                 <span class="result-value" id="baseDamageResult">-</span>
-            </div>
-
-            <div class="result-item">
+            </div>            <div class="result-item">
                 <span class="result-label">State Multiplier</span>
                 <span class="result-value" id="stateMultiplier">-</span>
+            </div>
+
+            <div class="base-info">
+                <div class="base-info-label">Status Effects</div>
+            </div>
+
+            <div class="status-effects-grid">
+                <div class="status-card bleed-card">
+                    <h4>🩸 Bleed Effect</h4>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <span class="status-label">Bleed Inflicted</span>
+                            <span class="status-value" id="bleedInflicted">-</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">DPS (per sec)</span>
+                            <span class="status-value" id="bleedDPS">-</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Total Damage</span>
+                            <span class="status-value" id="bleedTotal">-</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Heal Time</span>
+                            <span class="status-value" id="bleedDuration">-</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="base-info">
@@ -88,18 +129,30 @@
                     <h4>Head</h4>
                     <div class="damage-number" id="headDamage">-</div>
                     <div class="damage-multiplier" id="headMultiplier">1.2x Critical Hit</div>
+                    <div class="health-info">
+                        <div class="health-percentage" id="headHealthPercentage">-% Health</div>
+                        <div class="hits-to-kill" id="headHitsToKill">- Hits to Kill</div>
+                    </div>
                 </div>
 
                 <div class="damage-card body">
                     <h4>Body</h4>
                     <div class="damage-number" id="bodyDamage">-</div>
                     <div class="damage-multiplier">1x Standard Hit</div>
+                    <div class="health-info">
+                        <div class="health-percentage" id="bodyHealthPercentage">-% Health</div>
+                        <div class="hits-to-kill" id="bodyHitsToKill">- Hits to Kill</div>
+                    </div>
                 </div>
 
                 <div class="damage-card tail">
                     <h4>Tail</h4>
                     <div class="damage-number" id="tailDamage">-</div>
                     <div class="damage-multiplier">0.25x Glancing Hit</div>
+                    <div class="health-info">
+                        <div class="health-percentage" id="tailHealthPercentage">-% Health</div>
+                        <div class="hits-to-kill" id="tailHitsToKill">- Hits to Kill</div>
+                    </div>
                 </div>
             </div>
         </div>
