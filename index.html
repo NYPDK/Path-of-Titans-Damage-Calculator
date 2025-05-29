@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path of Titans - Damage Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🦕</div>
+        <h1>DAMAGE CALCULATOR</h1>
+        <p class="game-title">Path of Titans</p>
+        <p class="subtitle">Calculate attack damage across all hit locations</p>
+
+        <div class="info-box">
+            <h3>Combat Damage Formula</h3>
+            <ul>
+                <li>Base Damage = (Attacker Weight ÷ Victim Weight) × Attack Damage</li>
+                <li>With Armor = Base Damage ÷ Armor Value</li>
+                <li>Location Multipliers: Head (1.2x), Body (1x), Tail (0.25x)</li>
+                <li>State Multipliers: Sitting (2x), Sleeping (4x)</li>
+            </ul>
+        </div>
+
+        <div class="calculator-grid">
+            <div class="input-group">
+                <label for="attackerWeight">Attacker Combat Weight</label>
+                <input type="number" id="attackerWeight" placeholder="Enter weight" min="1">
+            </div>
+
+            <div class="input-group">
+                <label for="victimWeight">Victim Combat Weight</label>
+                <input type="number" id="victimWeight" placeholder="Enter weight" min="1">
+            </div>
+
+            <div class="input-group">
+                <label for="baseDamage">Base Attack Damage</label>
+                <input type="number" id="baseDamage" placeholder="Enter damage" min="1">
+            </div>
+
+            <div class="input-group">
+                <label for="armor">Victim Armor Value</label>
+                <input type="number" id="armor" placeholder="Default: 1" value="1" min="0.1" step="0.1">
+            </div>
+
+            <div class="input-group">
+                <label for="victimState">Victim State</label>
+                <select id="victimState">
+                    <option value="normal">Standing / Normal</option>
+                    <option value="sitting">Sitting (2x damage)</option>
+                    <option value="sleeping">Sleeping (4x damage)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="isCeratopsian">
+            <label for="isCeratopsian">Target is a Ceratopsian (immune to headshot bonus)</label>
+        </div>
+
+        <button class="calculate-btn" onclick="calculateDamage()">CALCULATE DAMAGE</button>
+
+        <div class="results" id="results">
+            <h3>COMBAT RESULTS</h3>
+            
+            <div class="result-item">
+                <span class="result-label">Weight Advantage</span>
+                <span class="result-value" id="weightRatio">-</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Base Damage Output</span>
+                <span class="result-value" id="baseDamageResult">-</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">State Multiplier</span>
+                <span class="result-value" id="stateMultiplier">-</span>
+            </div>
+
+            <div class="base-info">
+                <div class="base-info-label">Location-Based Damage</div>
+            </div>
+
+            <div class="damage-locations">
+                <div class="damage-card head">
+                    <h4>Head</h4>
+                    <div class="damage-number" id="headDamage">-</div>
+                    <div class="damage-multiplier" id="headMultiplier">1.2x Critical Hit</div>
+                </div>
+
+                <div class="damage-card body">
+                    <h4>Body</h4>
+                    <div class="damage-number" id="bodyDamage">-</div>
+                    <div class="damage-multiplier">1x Standard Hit</div>
+                </div>
+
+                <div class="damage-card tail">
+                    <h4>Tail</h4>
+                    <div class="damage-number" id="tailDamage">-</div>
+                    <div class="damage-multiplier">0.25x Glancing Hit</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
