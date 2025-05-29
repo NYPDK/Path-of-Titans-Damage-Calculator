@@ -1,4 +1,6 @@
 function calculateDamage() {
+    console.log('Calculate function called'); // Debug log
+    
     // Get input values
     const attackerWeight = parseFloat(document.getElementById('attackerWeight').value);
     const victimWeight = parseFloat(document.getElementById('victimWeight').value);
@@ -7,9 +9,21 @@ function calculateDamage() {
     const victimState = document.getElementById('victimState').value;
     const isCeratopsian = document.getElementById('isCeratopsian').checked;
 
-    // Validate inputs
-    if (!attackerWeight || !victimWeight || !baseDamage) {
-        alert('Please fill in all required combat stats!');
+    // Debug: Log all input values
+    console.log('Inputs:', {
+        attackerWeight,
+        victimWeight,
+        baseDamage,
+        armor,
+        victimState,
+        isCeratopsian
+    });
+
+    // Validate inputs - Check for NaN and zero values
+    if (isNaN(attackerWeight) || isNaN(victimWeight) || isNaN(baseDamage) || 
+        attackerWeight <= 0 || victimWeight <= 0 || baseDamage <= 0) {
+        alert('Please fill in all required combat stats with valid numbers!');
+        console.log('Validation failed');
         return;
     }
 
@@ -36,14 +50,71 @@ function calculateDamage() {
     const bodyDamage = baseDamageCalculated * bodyMultiplier * stateMultiplier;
     const tailDamage = baseDamageCalculated * tailMultiplier * stateMultiplier;
 
+    // Debug: Log calculated values
+    console.log('Calculated values:', {
+        weightRatio,
+        baseDamageCalculated,
+        stateMultiplier,
+        headDamage,
+        bodyDamage,
+        tailDamage
+    });
+
+    // Check if elements exist before trying to update them
+    const elements = {
+        weightRatio: document.getElementById('weightRatio'),
+        baseDamageResult: document.getElementById('baseDamageResult'),
+        stateMultiplier: document.getElementById('stateMultiplier'),
+        headDamage: document.getElementById('headDamage'),
+        bodyDamage: document.getElementById('bodyDamage'),
+        tailDamage: document.getElementById('tailDamage'),
+        headMultiplier: document.getElementById('headMultiplier'),
+        results: document.getElementById('results')
+    };
+
+    // Check if all elements exist
+    for (const [key, element] of Object.entries(elements)) {
+        if (!element) {
+            console.error(`Element not found: ${key}`);
+            return;
+        }
+    }
+
     // Display results
-    document.getElementById('weightRatio').textContent = weightRatio.toFixed(3);
-    document.getElementById('baseDamageResult').textContent = baseDamageCalculated.toFixed(2);
-    document.getElementById('stateMultiplier').textContent = stateMultiplier + 'x';
+    elements.weightRatio.textContent = weightRatio.toFixed(3);
+    elements.baseDamageResult.textContent = baseDamageCalculated.toFixed(2);
+    elements.stateMultiplier.textContent = stateMultiplier + 'x';
     
-    document.getElementById('headDamage').textContent = headDamage.toFixed(1);
-    document.getElementById('bodyDamage').textContent = bodyDamage.toFixed(1);
-    document.getElementById('tailDamage').textContent = tailDamage.toFixed(1);
+    elements.headDamage.textContent = headDamage.toFixed(1);
+    elements.bodyDamage.textContent = bodyDamage.toFixed(1);
+    elements.tailDamage.textContent = tailDamage.toFixed(1);
 
     // Update head multiplier text if Ceratopsian
-    document.getElementById('headMultiplier').textContent = 
+    elements.headMultiplier.textContent = 
+        isCeratopsian ? '1x Standard Hit (Armored)' : '1.2x Critical Hit';
+
+    // Show results section
+    elements.results.classList.add('show');
+    console.log('Results should now be visible');
+
+    // Scroll to results
+    elements.results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Allow Enter key to calculate
+document.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        calculateDamage();
+    }
+});
+
+// Also add click event listener as backup (in case onclick attribute doesn't work)
+document.addEventListener('DOMContentLoaded', function() {
+    const calculateBtn = document.querySelector('.calculate-btn');
+    if (calculateBtn) {
+        calculateBtn.addEventListener('click', calculateDamage);
+        console.log('Click event listener added to calculate button');
+    } else {
+        console.error('Calculate button not found');
+    }
+});
